@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS livestock_type(
+	livestock_type_id SERIAL PRIMARY KEY,
+	livestock_type_name VARCHAR(25) NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
