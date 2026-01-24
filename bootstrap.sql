@@ -2,7 +2,14 @@
 -- SCHEMA BOOTSTRAP FILE
 -- ======================================================
 
+\c agromercado
+
 BEGIN;
+
+DROP SCHEMA IF EXISTS public CASCADE;
+CREATE SCHEMA public;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO public;
 
 -- -----------------
 -- EXTENSIONS
@@ -24,11 +31,6 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 \i models/company.sql
 \i models/livestock_post.sql
 \i models/sale.sql
-
--- -----------------
--- INDEXES
--- -----------------
-\i indexes/sale.sql
 
 -- -----------------
 -- FUNCTIONS

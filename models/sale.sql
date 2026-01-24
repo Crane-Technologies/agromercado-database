@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS sale(
 	bought_by UUID NOT NULL REFERENCES app_user(app_user_id) ON DELETE RESTRICT,
 	amount NUMERIC(8,2) NOT NULL,
 	commission_percentage NUMERIC(4,2) DEFAULT 2.5,
-	commission_amount NUMERIC(8,2) GENERATED ALWAYS AS (amount * commission_percentage) STORED,
+	commission_amount NUMERIC(8,2) GENERATED ALWAYS AS (amount * commission_percentage / 100) STORED,
 	sale_rating NUMERIC(2,1) CHECK (sale_rating BETWEEN 1 AND 5),
 	sale_completed BOOLEAN DEFAULT false,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
