@@ -26,16 +26,19 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 \i models/livestock_type.sql
 \i models/breed.sql
 \i models/sector.sql
+\i models/sale_type.sql
+\i models/purchase_status.sql
 \i models/app_user.sql
 \i models/person.sql
 \i models/company.sql
 \i models/livestock_post.sql
+\i models/purchase_request.sql
 \i models/sale.sql
 
 -- -----------------
 -- FUNCTIONS
 -- -----------------
--- \i functions/update_timestamp.sql
+\i sql/functions/update_timestamp.sql
 
 -- -----------------
 -- SEEDS
@@ -43,6 +46,8 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 \i seeds/catalog/001-insert-states.sql
 \i seeds/catalog/002-insert-roles.sql
 \i seeds/catalog/003-insert-reputation-levels.sql
+\i seeds/catalog/004-insert-purchase-status.sql
+\i seeds/catalog/005-insert-sale-types.sql
 
 -- -----------------
 -- INTEGRITY CHECKS
@@ -59,6 +64,14 @@ BEGIN
 
     IF (SELECT COUNT(*) FROM reputation_level) = 0 THEN
         RAISE EXCEPTION 'Reputation Levels table is empty after seed';
+    END IF;
+
+    IF (SELECT COUNT(*) FROM purchase_status) = 0 THEN
+        RAISE EXCEPTION 'Purchase Status table is empty after seed';
+    END IF;
+
+    IF (SELECT COUNT(*) FROM sale_type) = 0 THEN
+        RAISE EXCEPTION 'Sale Type table is empty after seed';
     END IF;
 END $$;
 
