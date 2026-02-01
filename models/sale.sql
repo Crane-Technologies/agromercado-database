@@ -27,9 +27,7 @@ CREATE TABLE IF NOT EXISTS sale(
     ) STORED,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT chk_sale_not_self
-        CHECK (seller_id <> buyer_id),
-		
+
     CONSTRAINT chk_sale_by_weight
         CHECK (
             (sale_type_id = 1 AND total_weight_kg IS NOT NULL AND price_per_kg IS NOT NULL AND price_per_unit IS NULL)

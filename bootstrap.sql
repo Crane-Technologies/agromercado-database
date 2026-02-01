@@ -28,17 +28,44 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 \i models/sector.sql
 \i models/sale_type.sql
 \i models/purchase_status.sql
+\i models/notification_type.sql
 \i models/app_user.sql
 \i models/person.sql
 \i models/company.sql
 \i models/livestock_post.sql
 \i models/purchase_request.sql
 \i models/sale.sql
+\i models/sale_rating.sql
+\i models/purchase_notification.sql
 
 -- -----------------
 -- FUNCTIONS
 -- -----------------
 \i sql/functions/update_timestamp.sql
+\i sql/functions/update_livestock_quantity.sql
+
+-- -----------------
+-- TRIGGERS
+-- -----------------
+\i sql/triggers/trg_state_updated_at.sql
+\i sql/triggers/trg_township_updated_at.sql
+\i sql/triggers/trg_role_updated_at.sql
+\i sql/triggers/trg_reputation_level_updated_at.sql
+\i sql/triggers/trg_livestock_type_updated_at.sql
+\i sql/triggers/trg_breed_updated_at.sql
+\i sql/triggers/trg_sector_updated_at.sql
+\i sql/triggers/trg_sale_type_updated_at.sql
+\i sql/triggers/trg_purchase_status_updated_at.sql
+\i sql/triggers/trg_notification_type_updated_at.sql
+\i sql/triggers/trg_app_user_updated_at.sql
+\i sql/triggers/trg_person_updated_at.sql
+\i sql/triggers/trg_company_updated_at.sql
+\i sql/triggers/trg_livestock_post_updated_at.sql
+\i sql/triggers/trg_purchase_request_updated_at.sql
+\i sql/triggers/trg_sale_updated_at.sql
+\i sql/triggers/trg_sale_rating_updated_at.sql
+\i sql/triggers/trg_purchase_notification_updated_at.sql
+\i sql/triggers/trg_update_livestock_quantity.sql
 
 -- -----------------
 -- SEEDS
@@ -48,6 +75,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 \i seeds/catalog/003-insert-reputation-levels.sql
 \i seeds/catalog/004-insert-purchase-status.sql
 \i seeds/catalog/005-insert-sale-types.sql
+\i seeds/catalog/006-insert-notification-types.sql
 
 -- -----------------
 -- INTEGRITY CHECKS
@@ -72,6 +100,10 @@ BEGIN
 
     IF (SELECT COUNT(*) FROM sale_type) = 0 THEN
         RAISE EXCEPTION 'Sale Type table is empty after seed';
+    END IF;
+
+    IF (SELECT COUNT(*) FROM purchase_notification_type) = 0 THEN
+        RAISE EXCEPTION 'Notification Type table is empty after seed';
     END IF;
 END $$;
 
