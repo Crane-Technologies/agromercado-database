@@ -15,6 +15,7 @@ GRANT ALL ON SCHEMA public TO public;
 -- EXTENSIONS
 -- -----------------
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 
 -- -----------------
 -- TABLES
@@ -44,6 +45,8 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 \i sql/functions/update_timestamp.sql
 \i sql/functions/create_app_user.sql
 \i sql/functions/update_livestock_quantity.sql
+\i sql/functions/calculate_livestock_search_term_relevance.sql
+\i sql/functions/search_livestock_posts.sql
 
 -- -----------------
 -- TRIGGERS
@@ -78,6 +81,9 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 \i seeds/catalog/005-insert-sale-types.sql
 \i seeds/catalog/006-insert-notification-types.sql
 \i seeds/catalog/007-insert-zulia-townships.sql
+\i seeds/catalog/008-insert-livestock-types.sql
+\i seeds/catalog/009-insert-breeds.sql
+\i seeds/catalog/010-insert-sectors.sql
 
 -- -----------------
 -- INTEGRITY CHECKS
@@ -110,6 +116,18 @@ BEGIN
 
     IF (SELECT COUNT(*) FROM township WHERE township_state_id = (SELECT state_id FROM state WHERE state_name = 'Zulia')) = 0 THEN
         RAISE EXCEPTION 'Zulia townships table is empty after seed';
+    END IF;
+
+    IF (SELECT COUNT(*) FROM livestock_type) = 0 THEN
+        RAISE EXCEPTION 'Livestock Types table is empty after seed';
+    END IF;
+
+    IF (SELECT COUNT(*) FROM breed) = 0 THEN
+        RAISE EXCEPTION 'Breeds table is empty after seed';
+    END IF;
+
+    IF (SELECT COUNT(*) FROM sector) = 0 THEN
+        RAISE EXCEPTION 'Sectors table is empty after seed';
     END IF;
 END $$;
 

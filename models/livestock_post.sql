@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS livestock_post(
     livestock_post_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     livestock_type_id INTEGER NOT NULL REFERENCES livestock_type(livestock_type_id) ON DELETE RESTRICT,
+    livestock_post_name VARCHAR(100) NOT NULL,
     posted_by UUID NOT NULL REFERENCES app_user(app_user_id) ON DELETE CASCADE,
     breed_id INTEGER NOT NULL REFERENCES breed(breed_id) ON DELETE RESTRICT,
     sector_id INTEGER NOT NULL REFERENCES sector(sector_id) ON DELETE RESTRICT,
@@ -36,3 +37,4 @@ CREATE INDEX IF NOT EXISTS idx_livestock_post_posted_by ON livestock_post(posted
 CREATE INDEX IF NOT EXISTS idx_livestock_post_township ON livestock_post(township_id);
 CREATE INDEX IF NOT EXISTS idx_livestock_post_sale_type ON livestock_post(sale_type_id);
 CREATE INDEX IF NOT EXISTS idx_livestock_post_active ON livestock_post(is_active) WHERE is_active = true;
+CREATE INDEX IF NOT EXISTS idx_livestock_post_name ON livestock_post USING gin(livestock_post_name gin_trgm_ops);
