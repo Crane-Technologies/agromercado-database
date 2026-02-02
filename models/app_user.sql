@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS app_user(
 	document_type VARCHAR(1) NOT NULL,
 	document_number INTEGER UNIQUE NOT NULL,
 	township_id INTEGER NOT NULL REFERENCES township(township_id) ON DELETE RESTRICT, 
-	is_verified BOOLEAN DEFAULT false, -- para verificación de correo electrónico al crear la cuenta.
+	is_verified BOOLEAN DEFAULT FALSE, 
 	reputation_level_id INTEGER DEFAULT 1 NOT NULL REFERENCES reputation_level(reputation_level_id) ON DELETE RESTRICT,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

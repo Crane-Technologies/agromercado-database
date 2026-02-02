@@ -42,6 +42,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 -- FUNCTIONS
 -- -----------------
 \i sql/functions/update_timestamp.sql
+\i sql/functions/create_app_user.sql
 \i sql/functions/update_livestock_quantity.sql
 
 -- -----------------
@@ -76,6 +77,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 \i seeds/catalog/004-insert-purchase-status.sql
 \i seeds/catalog/005-insert-sale-types.sql
 \i seeds/catalog/006-insert-notification-types.sql
+\i seeds/catalog/007-insert-zulia-townships.sql
 
 -- -----------------
 -- INTEGRITY CHECKS
@@ -104,6 +106,10 @@ BEGIN
 
     IF (SELECT COUNT(*) FROM purchase_notification_type) = 0 THEN
         RAISE EXCEPTION 'Notification Type table is empty after seed';
+    END IF;
+
+    IF (SELECT COUNT(*) FROM township WHERE township_state_id = (SELECT state_id FROM state WHERE state_name = 'Zulia')) = 0 THEN
+        RAISE EXCEPTION 'Zulia townships table is empty after seed';
     END IF;
 END $$;
 
