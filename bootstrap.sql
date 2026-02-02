@@ -28,7 +28,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 \i models/sector.sql
 \i models/sale_type.sql
 \i models/purchase_status.sql
-\i models/notification_type.sql
+\i models/purchase_notification_type.sql
 \i models/app_user.sql
 \i models/person.sql
 \i models/company.sql
@@ -56,7 +56,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 \i sql/triggers/trg_sector_updated_at.sql
 \i sql/triggers/trg_sale_type_updated_at.sql
 \i sql/triggers/trg_purchase_status_updated_at.sql
-\i sql/triggers/trg_notification_type_updated_at.sql
+\i sql/triggers/trg_purchase_notification_type_updated_at.sql
 \i sql/triggers/trg_app_user_updated_at.sql
 \i sql/triggers/trg_person_updated_at.sql
 \i sql/triggers/trg_company_updated_at.sql
