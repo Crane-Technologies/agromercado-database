@@ -30,6 +30,7 @@ CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 \i models/sale_type.sql
 \i models/purchase_status.sql
 \i models/purchase_notification_type.sql
+\i models/file_type.sql
 \i models/app_user.sql
 \i models/verification_code.sql
 \i models/person.sql
@@ -39,6 +40,7 @@ CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 \i models/sale.sql
 \i models/sale_rating.sql
 \i models/purchase_notification.sql
+\i models/file.sql
 
 -- -----------------
 -- FUNCTIONS
@@ -73,6 +75,8 @@ CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 \i sql/triggers/trg_sale_rating_updated_at.sql
 \i sql/triggers/trg_purchase_notification_updated_at.sql
 \i sql/triggers/trg_update_livestock_quantity.sql
+\i sql/triggers/trg_app_file_type_updated_at.sql
+\i sql/triggers/trg_app_file_updated_at.sql
 
 -- -----------------
 -- SEEDS
@@ -87,6 +91,7 @@ CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 \i seeds/catalog/008-insert-livestock-types.sql
 \i seeds/catalog/009-insert-breeds.sql
 \i seeds/catalog/010-insert-sectors.sql
+\i seeds/catalog/011-insert-file-types.sql
 
 -- -----------------
 -- INTEGRITY CHECKS
