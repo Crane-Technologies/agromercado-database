@@ -30,7 +30,7 @@ CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 \i models/sale_type.sql
 \i models/purchase_status.sql
 \i models/purchase_notification_type.sql
-\i models/file_type.sql
+\i models/app_file_type.sql
 \i models/app_user.sql
 \i models/verification_code.sql
 \i models/person.sql
@@ -40,7 +40,7 @@ CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 \i models/sale.sql
 \i models/sale_rating.sql
 \i models/purchase_notification.sql
-\i models/file.sql
+\i models/app_file.sql
 
 -- -----------------
 -- FUNCTIONS
