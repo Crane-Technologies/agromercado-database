@@ -2,7 +2,7 @@
 -- SCHEMA BOOTSTRAP FILE
 -- ======================================================
 
-\c agromercado
+\c agrodil
 
 BEGIN;
 
@@ -30,7 +30,9 @@ CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 \i models/sale_type.sql
 \i models/purchase_status.sql
 \i models/purchase_notification_type.sql
+\i models/app_file_type.sql
 \i models/app_user.sql
+\i models/verification_code.sql
 \i models/person.sql
 \i models/company.sql
 \i models/livestock_post.sql
@@ -38,12 +40,15 @@ CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 \i models/sale.sql
 \i models/sale_rating.sql
 \i models/purchase_notification.sql
+\i models/app_file.sql
 
 -- -----------------
 -- FUNCTIONS
 -- -----------------
 \i sql/functions/update_timestamp.sql
 \i sql/functions/create_app_user.sql
+\i sql/functions/insert_verification_code.sql
+\i sql/functions/verify_and_mark_user.sql
 \i sql/functions/update_livestock_quantity.sql
 \i sql/functions/calculate_livestock_search_term_relevance.sql
 \i sql/functions/search_livestock_posts.sql
@@ -70,6 +75,8 @@ CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 \i sql/triggers/trg_sale_rating_updated_at.sql
 \i sql/triggers/trg_purchase_notification_updated_at.sql
 \i sql/triggers/trg_update_livestock_quantity.sql
+\i sql/triggers/trg_app_file_type_updated_at.sql
+\i sql/triggers/trg_app_file_updated_at.sql
 
 -- -----------------
 -- SEEDS
@@ -84,6 +91,9 @@ CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 \i seeds/catalog/008-insert-livestock-types.sql
 \i seeds/catalog/009-insert-breeds.sql
 \i seeds/catalog/010-insert-sectors.sql
+\i seeds/catalog/011-insert-file-types.sql
+
+\i seeds/dev/dev-seed.sql
 
 -- -----------------
 -- INTEGRITY CHECKS

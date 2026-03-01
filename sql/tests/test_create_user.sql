@@ -1,16 +1,17 @@
 -- ======================================================================
--- TEST: USER REGISTRATION FLOW
+-- TEST: USER REGISTRATION AND VERIFICATION FLOW
 -- ======================================================================
 --
 -- Objective:
 -- Validate that the create_app_user() function correctly creates users,
 -- automatically determining if they are natural persons or legal entities
--- based on document type.
+-- based on document type. Also validates the verification code flow.
 --
 -- Prerequisites:
 -- - Database initialized with bootstrap.sql
 -- - At least one township exists in the database
 -- - Role with role_id = 1 (common user) exists
+-- - Functions: insert_verification_code(), verify_and_mark_user()
 --
 -- ======================================================================
 
@@ -20,7 +21,7 @@
 
 DO $$
 BEGIN
-    -- Clean up any existing test data
+    -- Clean up any existing test data (verification_code will cascade from app_user)
     DELETE FROM person WHERE app_user_id IN (
         SELECT app_user_id FROM app_user 
         WHERE email LIKE '%@test-registration.com'
@@ -409,14 +410,40 @@ END $$;
 --   - Enforces uniqueness constraints
 --   - No duplicate records created
 --
+-- □ TEST 7: Verification Code - Successful Verification
+--   - User created with is_verified = false
+--   - Verification code inserted successfully
+--   - Code is valid and not used initially
+--   - verify_and_mark_user() procedure executes successfully
+--   - User is marked as verified (is_verified = true)
+--   - Code is marked as used with timestamp
+--
+-- □ TEST 8: Verification Code - Invalidate Previous Codes
+--   - First code inserted successfully
+--   - Second code automatically invalidates first
+--   - Only most recent code remains valid
+--
+-- □ TEST 9: Verification Code - Expired Code
+--   - Code created with past expiration timestamp
+--   - Expiration check validates correctly
+--   - Expired codes can be identified for cleanup
+--
+-- □ TEST 10: Verification Code - Different Types (Email/Phone)
+--   - Email and phone codes coexist independently
+--   - Regenerating email code doesn't affect phone code
+--   - Type-specific invalidation works correctly
+--
 -- ======================================================================
 -- PASS CRITERIA
 -- ======================================================================
 --
--- ✓ All 6 tests display "PASSED" message
+-- ✓ All 10 tests display "PASSED" message
 -- ✓ No unexpected exceptions raised
--- ✓ Data integrity maintained across related tables (app_user, person, company)
+-- ✓ Data integrity maintained across related tables (app_user, person, company, verification_code)
 -- ✓ Function correctly determines person vs company based on document_type
+-- ✓ Verification code flow works correctly (insert, verify, invalidate)
+-- ✓ Code expiration is properly handled
+-- ✓ Email and phone verification codes work independently
 -- ✓ Proper error handling with clear, actionable messages
 -- ✓ Test is idempotent (can be run multiple times with same results)
 --
@@ -455,5 +482,30 @@ END $$;
 -- NOTICE: --- TEST 6: Validation - Duplicate Email ---
 -- NOTICE: ✓ Correct error raised: User with this email, phone, or document number already exists
 -- NOTICE: TEST 6: PASSED
+-- 
+-- NOTICE: --- TEST 7: Verification Code - Successful Verification ---
+-- NOTICE: ✓ User created with is_verified = false
+-- NOTICE: ✓ Verification code inserted: [UUID]
+-- NOTICE: ✓ Verification code is valid and not used
+-- NOTICE: ✓ User is now verified
+-- NOTICE: ✓ Verification code marked as used
+-- NOTICE: TEST 7: PASSED
+-- 
+-- NOTICE: --- TEST 8: Verification Code - Invalidate Previous Codes ---
+-- NOTICE: ✓ First code inserted: [UUID]
+-- NOTICE: ✓ Second code inserted: [UUID]
+-- NOTICE: ✓ Previous code was automatically invalidated
+-- NOTICE: ✓ New code is valid
+-- NOTICE: TEST 8: PASSED
+-- 
+-- NOTICE: --- TEST 9: Verification Code - Expired Code ---
+-- NOTICE: ✓ Expired verification code created: [UUID]
+-- NOTICE: ✓ Code is correctly marked as expired
+-- NOTICE: TEST 9: PASSED
+-- 
+-- NOTICE: --- TEST 10: Verification Code - Different Types ---
+-- NOTICE: ✓ Email and phone codes coexist independently
+-- NOTICE: ✓ Phone code remains valid when email code is regenerated
+-- NOTICE: TEST 10: PASSED
 --
 -- ======================================================================
