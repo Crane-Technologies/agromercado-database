@@ -20,7 +20,8 @@ RETURNS TABLE(
     livestock_post_name VARCHAR(100),
     posted_by UUID,
     posted_by_name TEXT,
-    relevance REAL
+    relevance REAL,
+    total_count BIGINT  
 ) AS $$
 BEGIN
     RETURN QUERY
@@ -36,7 +37,10 @@ BEGIN
              FROM company c 
              WHERE c.app_user_id = lp.posted_by)
         ) AS posted_by_name,
-        calculate_livestock_search_term_relevance(lp.livestock_post_name, lp.details, p_search_term) AS relevance
+        calculate_livestock_search_term_relevance(
+            lp.livestock_post_name, lp.details, p_search_term
+        ) AS relevance,
+        COUNT(*) OVER() AS total_count
     FROM livestock_post lp
     JOIN township t ON t.township_id = lp.township_id
     WHERE 
