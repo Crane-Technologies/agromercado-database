@@ -16,11 +16,13 @@ BEGIN
     INSERT INTO verification_code (
         app_user_id,
         code,
-        verification_type
+        verification_type, 
+        expires_at
     ) VALUES (
         p_app_user_id,
         p_code,
-        p_verification_type
+        p_verification_type,
+        NOW() + INTERVAL '30 minutes'
     )
     RETURNING verification_code_id INTO v_verification_code_id;
 

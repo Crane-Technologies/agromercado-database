@@ -32,6 +32,7 @@ CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 \i models/purchase_notification_type.sql
 \i models/app_file_type.sql
 \i models/app_user.sql
+\i models/refresh_token.sql
 \i models/verification_code.sql
 \i models/person.sql
 \i models/company.sql
