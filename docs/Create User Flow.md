@@ -208,7 +208,7 @@ See [`tests/test_create_user.sql`](../tests/test_create_user.sql) for complete t
 ## Implementation Notes
 
 1. **Transaction Safety**: Functions use implicit transactions, roll back on error
-2. **Password Security**: Function expects pre-hashed password (argon2/bcrypt)
+2. **Password Security**: Function expects pre-hashed password (bcrypt)
 3. **Verification Logic in Backend**: Code validation is handled in backend, not database
 4. **Code Expiration**: Codes expire after 1 hour (enforced via `expires_at` timestamp)
 5. **Code Cleanup**: Expired codes should be deleted periodically via cron job

@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS app_user(
 	phone VARCHAR(20) UNIQUE NOT NULL,
 	password_hash VARCHAR(255) NOT NULL,
 	document_type VARCHAR(1) NOT NULL,
-	document_number INTEGER UNIQUE NOT NULL,
+	document_number BIGINT UNIQUE NOT NULL,
 	township_id INTEGER NOT NULL REFERENCES township(township_id) ON DELETE RESTRICT, 
 	is_verified BOOLEAN DEFAULT FALSE, 
 	reputation_level_id INTEGER DEFAULT 1 NOT NULL REFERENCES reputation_level(reputation_level_id) ON DELETE RESTRICT,
