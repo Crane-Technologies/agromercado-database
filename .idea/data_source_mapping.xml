@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourcePerFileMappings">
+    <file url="file://$PROJECT_DIR$/bootstrap.sql" value="1315067a-256d-47b4-80e1-5b5e297a39f9" />
+    <file url="file://$PROJECT_DIR$/models/refresh_token.sql" value="1315067a-256d-47b4-80e1-5b5e297a39f9" />
+    <file url="file://$PROJECT_DIR$/sql/functions/create_app_user.sql" value="1315067a-256d-47b4-80e1-5b5e297a39f9" />
+  </component>
+</project>

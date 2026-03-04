@@ -13,9 +13,9 @@ CREATE OR REPLACE FUNCTION create_app_user(
     p_birthdate DATE DEFAULT NULL,
     p_company_name VARCHAR(50) DEFAULT NULL
 )
-RETURNS UUID AS $$
+RETURNS SETOF app_user AS $$
 DECLARE
-    v_user_id UUID;
+    v_user_id    UUID;
     v_is_company BOOLEAN;
 BEGIN
     v_is_company := (p_document_type = 'J');
@@ -73,7 +73,7 @@ BEGIN
         );
     END IF;
 
-    RETURN v_user_id;
+    RETURN QUERY SELECT * FROM app_user WHERE app_user_id = v_user_id;
 
 EXCEPTION
     WHEN unique_violation THEN
@@ -85,8 +85,8 @@ EXCEPTION
 END;
 $$ LANGUAGE plpgsql;
 
-COMMENT ON FUNCTION create_app_user(VARCHAR, VARCHAR, VARCHAR, VARCHAR, INTEGER, INTEGER, INTEGER, VARCHAR, VARCHAR, VARCHAR, VARCHAR, DATE, VARCHAR) IS 
-    'Registers a new user in the system. 
-    Automatically determines if the user is a person (V) or company (J) 
-    based on document type and creates the corresponding record in person or 
-    company table. Returns the UUID of the created user.';
+COMMENT ON FUNCTION create_app_user(VARCHAR, VARCHAR, VARCHAR, VARCHAR, INTEGER, INTEGER, INTEGER, VARCHAR, VARCHAR, VARCHAR, VARCHAR, DATE, VARCHAR) IS
+    'Registers a new user in the system.
+    Automatically determines if the user is a person (V) or company (J)
+    based on document type and creates the corresponding record in person or
+    company table. Returns the full app_user row of the created user.';

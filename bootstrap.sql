@@ -2,7 +2,7 @@
 -- SCHEMA BOOTSTRAP FILE
 -- ======================================================
 
-\c agrodil
+\c agromercado
 
 BEGIN;
 
@@ -93,8 +93,6 @@ CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 \i seeds/catalog/009-insert-breeds.sql
 \i seeds/catalog/010-insert-sectors.sql
 \i seeds/catalog/011-insert-file-types.sql
-
-\i seeds/dev/dev-seed.sql
 
 -- -----------------
 -- INTEGRITY CHECKS
